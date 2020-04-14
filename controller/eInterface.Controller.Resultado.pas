@@ -1,47 +1,69 @@
-unit eInterface.Controller.Resultado;
+﻿unit eInterface.Controller.Resultado;
 
 interface
 
 uses
-  eInterface.Controller.Interfaces, eInterface.Model.Interfaces;
+  eInterface.Controller.Interfaces, eInterface.Model.Interfaces,
+  System.Generics.Collections;
 
 type
   TControllerResultado = class(TInterfacedObject, iControllerResultado)
-  FSimulador : iSimulador;
+    FSimulador: iSimulador;
+    FResultados: TList<iResultado>;
+    FCalculadora: iCalculadora;
   private
-    function Simulador(): iSimulador; overload;
+    function Simulador: iSimulador; overload;
     function Simulador(Value: iSimulador): iControllerResultado; overload;
+    function Resultado: TList<iResultado>; overload;
+    function Resultado(Value: TList<iResultado>): iControllerResultado; overload;
     procedure ValidarDados;
     function SimuladorFactory: iSimulador;
+    function Calcular: iControllerResultado;
   public
     constructor Create;
     destructor Destroy; override;
     class function New: iControllerResultado;
-    function Resultado: iResultado;
   end;
 
 implementation
 
 uses
-  eInterface.Model.Amortizacao.Factory, eInterface.Model.Simulador.Factory,
-  eInterface.Model.Simulador, System.SysUtils;
+  eInterface.Model.Calculadora.Factory, System.SysUtils, eInterface.Model.Simulador.Factory;
 
 { TControllerResultado }
 
-
-function TControllerResultado.Resultado(): iResultado;
+function TControllerResultado.Resultado(): TList<iResultado>;
 begin
-  ValidarDados();
+  Result := FResultados;
+end;
+
+function TControllerResultado.Calcular: iControllerResultado;
+begin
+  Result := Self;
+
+  ValidarDados;
 
   case FSimulador.TipoSistema of
-    tpAlemao: Result := TModelAmortizacaoFactory.New.Alemao;
-    tpAmericano: Result := TModelAmortizacaoFactory.New.Americano;
-    tpAmortizacaoConstante: Result := TModelAmortizacaoFactory.New.AmortizacaoConstante;
-    tpAmortizacaoMisto: Result := TModelAmortizacaoFactory.New.AmortizacaoMisto;
-    tpPagamentoUnico: Result := TModelAmortizacaoFactory.New.PagamentoUnico;
-    tpPagamentoVariavel: Result := TModelAmortizacaoFactory.New.PagamentoVariavel;
-    tpPrice: Result := TModelAmortizacaoFactory.New.Price;
+    tpAlemao:
+      FCalculadora := TModelCalculadoraFactory.New.Alemao;
+    tpAmericano:
+      FCalculadora := TModelCalculadoraFactory.New.Americano;
+    tpAmortizacaoConstante:
+      FCalculadora := TModelCalculadoraFactory.New.AmortizacaoConstante;
+    tpAmortizacaoMisto:
+      FCalculadora := TModelCalculadoraFactory.New.AmortizacaoMisto;
+    tpPagamentoUnico:
+      FCalculadora := TModelCalculadoraFactory.New.PagamentoUnico;
+    tpPagamentoVariavel:
+      FCalculadora := TModelCalculadoraFactory.New.PagamentoVariavel;
+    tpPrice:
+      FCalculadora := TModelCalculadoraFactory.New.Price;
   end;
+
+  FResultados := FCalculadora
+                  .Simulador(FSimulador)
+                  .Calcular
+                  .Resultados;
 end;
 
 constructor TControllerResultado.Create;
@@ -59,8 +81,15 @@ begin
   Result := Self.Create;
 end;
 
-function TControllerResultado.Simulador(
-  Value: iSimulador): iControllerResultado;
+function TControllerResultado.Resultado(
+  Value: TList<iResultado>): iControllerResultado;
+begin
+  Result := Self;
+  FResultados := Value;
+end;
+
+function TControllerResultado.Simulador(Value: iSimulador)
+  : iControllerResultado;
 begin
   Result := Self;
   FSimulador := Value;
@@ -78,7 +107,7 @@ end;
 
 procedure TControllerResultado.ValidarDados;
 begin
-  if not (FSimulador.TipoSistema in [Low(TTypeSistema)..High(TTypeSistema)]) then
+  if not(FSimulador.TipoSistema in [Low(TTypeSistema) .. High(TTypeSistema)]) then
     raise Exception.Create('O Sistema de amortização é obrigatório!');
 
   if (FSimulador.Capital <= 0.0) then
@@ -87,8 +116,8 @@ begin
   if (FSimulador.TaxaJuros <= 0.0) then
     raise Exception.Create('A Taxa de Juros é obrigatória!');
 
-  if (FSimulador.TotalParcelas = 0.0) then
-    raise Exception.Create('O Total de Parcelas de óbrigatório!');
+  if (FSimulador.TotalParcelas <= 0.0) then
+    raise Exception.Create('O Total de Parcelas de obrigatório!');
 end;
 
 end.

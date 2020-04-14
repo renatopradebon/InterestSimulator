@@ -3,13 +3,15 @@ unit eInterface.Controller.Interfaces;
 interface
 
 uses
-  eInterface.Model.Interfaces;
+  eInterface.Model.Interfaces, System.Generics.Collections;
 
 type
 
   iControllerResultado = interface
     ['{A90C187E-221C-4DFA-945F-085D380B8302}']
-    function Resultado: iResultado;
+    function Calcular: iControllerResultado;
+    function Resultado: TList<iResultado>; overload;
+    function Resultado(Value: TList<iResultado>): iControllerResultado; overload;
     function Simulador: iSimulador; overload;
     function Simulador(Value: iSimulador): iControllerResultado; overload;
     function SimuladorFactory: iSimulador;

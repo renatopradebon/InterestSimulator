@@ -3,26 +3,26 @@ unit eInterface.Model.PagamentoUnico;
 interface
 
 uses
-  eInterface.Model.Interfaces;
+  eInterface.Model.Interfaces, System.Generics.Collections;
 
 type
   TModelAmortizacaoPagamentoUnico = class(TInterfacedObject, iResultado)
   private
     FNumeroParcela: Integer;
-    FValorJuros: Double;
-    FValorAmortizacao: Double;
-    FValorSaldo: Double;
-    FValorPagamento: Double;
+    FValorJuros: Real;
+    FValorAmortizacao: Real;
+    FValorSaldo: Real;
+    FValorPagamento: Real;
     function NumeroParcela (Value : Integer) : iResultado; overload;
     function NumeroParcela : Integer; overload;
-    function ValorJuros (Value : Double) : iResultado; overload;
-    function ValorJuros : Double; overload;
-    function ValorAmortizacao (Value : Double) : iResultado; overload;
-    function ValorAmortizacao : Double; overload;
-    function ValorSaldo (Value : Double) : iResultado; overload;
-    function ValorSaldo : Double; overload;
-    function ValorPagamento (Value : Double) : iResultado; overload;
-    function ValorPagamento : Double; overload;
+    function ValorJuros (Value : Real) : iResultado; overload;
+    function ValorJuros : Real; overload;
+    function ValorAmortizacao (Value : Real) : iResultado; overload;
+    function ValorAmortizacao : Real; overload;
+    function ValorSaldo (Value : Real) : iResultado; overload;
+    function ValorSaldo : Real; overload;
+    function ValorPagamento (Value : Real) : iResultado; overload;
+    function ValorPagamento : Real; overload;
   public
     constructor Create;
     destructor Destroy; override;
@@ -61,47 +61,47 @@ begin
 end;
 
 function TModelAmortizacaoPagamentoUnico.ValorAmortizacao(
-  Value: Double): iResultado;
+  Value: Real): iResultado;
 begin
   Result := Self;
   FValorAmortizacao := Value;
 end;
 
-function TModelAmortizacaoPagamentoUnico.ValorAmortizacao: Double;
+function TModelAmortizacaoPagamentoUnico.ValorAmortizacao: Real;
 begin
   Result := FValorAmortizacao;
 end;
 
-function TModelAmortizacaoPagamentoUnico.ValorJuros(Value: Double): iResultado;
+function TModelAmortizacaoPagamentoUnico.ValorJuros(Value: Real): iResultado;
 begin
   Result := Self;
   FValorJuros := Value;
 end;
 
-function TModelAmortizacaoPagamentoUnico.ValorJuros: Double;
+function TModelAmortizacaoPagamentoUnico.ValorJuros: Real;
 begin
 Result := FValorJuros;
 end;
 
-function TModelAmortizacaoPagamentoUnico.ValorPagamento: Double;
+function TModelAmortizacaoPagamentoUnico.ValorPagamento: Real;
 begin
   Result := FValorPagamento;
 end;
 
 function TModelAmortizacaoPagamentoUnico.ValorPagamento(
-  Value: Double): iResultado;
+  Value: Real): iResultado;
 begin
   Result := Self;
   FValorPagamento := Value;
 end;
 
-function TModelAmortizacaoPagamentoUnico.ValorSaldo(Value: Double): iResultado;
+function TModelAmortizacaoPagamentoUnico.ValorSaldo(Value: Real): iResultado;
 begin
   Result := Self;
   FValorSaldo := Value;
 end;
 
-function TModelAmortizacaoPagamentoUnico.ValorSaldo: Double;
+function TModelAmortizacaoPagamentoUnico.ValorSaldo: Real;
 begin
   Result := FValorSaldo;
 end;

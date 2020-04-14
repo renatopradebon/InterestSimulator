@@ -14,6 +14,7 @@ object frmParent: TfrmParent
   Menu = MenuPrincipal
   OldCreateOrder = False
   Visible = True
+  WindowState = wsMaximized
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13

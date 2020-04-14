@@ -9,20 +9,20 @@ type
   TModelAmortizacaoAmericano = class(TInterfacedObject, iResultado)
   private
     FNumeroParcela: Integer;
-    FValorJuros: Double;
-    FValorAmortizacao: Double;
-    FValorSaldo: Double;
-    FValorPagamento: Double;
+    FValorJuros: Real;
+    FValorAmortizacao: Real;
+    FValorSaldo: Real;
+    FValorPagamento: Real;
     function NumeroParcela (Value : Integer) : iResultado; overload;
     function NumeroParcela : Integer; overload;
-    function ValorJuros (Value : Double) : iResultado; overload;
-    function ValorJuros : Double; overload;
-    function ValorAmortizacao (Value : Double) : iResultado; overload;
-    function ValorAmortizacao : Double; overload;
-    function ValorSaldo (Value : Double) : iResultado; overload;
-    function ValorSaldo : Double; overload;
-    function ValorPagamento (Value : Double) : iResultado; overload;
-    function ValorPagamento : Double; overload;
+    function ValorJuros (Value : Real) : iResultado; overload;
+    function ValorJuros : Real; overload;
+    function ValorAmortizacao (Value : Real) : iResultado; overload;
+    function ValorAmortizacao : Real; overload;
+    function ValorSaldo (Value : Real) : iResultado; overload;
+    function ValorSaldo : Real; overload;
+    function ValorPagamento (Value : Real) : iResultado; overload;
+    function ValorPagamento : Real; overload;
   public
     constructor Create;
     destructor Destroy; override;
@@ -61,47 +61,47 @@ begin
 end;
 
 function TModelAmortizacaoAmericano.ValorAmortizacao(
-  Value: Double): iResultado;
+  Value: Real): iResultado;
 begin
   Result := Self;
   FValorAmortizacao := Value;
 end;
 
-function TModelAmortizacaoAmericano.ValorAmortizacao: Double;
+function TModelAmortizacaoAmericano.ValorAmortizacao: Real;
 begin
   Result := FValorAmortizacao;
 end;
 
-function TModelAmortizacaoAmericano.ValorJuros(Value: Double): iResultado;
+function TModelAmortizacaoAmericano.ValorJuros(Value: Real): iResultado;
 begin
   Result := Self;
   FValorJuros := Value;
 end;
 
-function TModelAmortizacaoAmericano.ValorJuros: Double;
+function TModelAmortizacaoAmericano.ValorJuros: Real;
 begin
 Result := FValorJuros;
 end;
 
-function TModelAmortizacaoAmericano.ValorPagamento: Double;
+function TModelAmortizacaoAmericano.ValorPagamento: Real;
 begin
   Result := FValorPagamento;
 end;
 
 function TModelAmortizacaoAmericano.ValorPagamento(
-  Value: Double): iResultado;
+  Value: Real): iResultado;
 begin
   Result := Self;
   FValorPagamento := Value;
 end;
 
-function TModelAmortizacaoAmericano.ValorSaldo(Value: Double): iResultado;
+function TModelAmortizacaoAmericano.ValorSaldo(Value: Real): iResultado;
 begin
   Result := Self;
   FValorSaldo := Value;
 end;
 
-function TModelAmortizacaoAmericano.ValorSaldo: Double;
+function TModelAmortizacaoAmericano.ValorSaldo: Real;
 begin
   Result := FValorSaldo;
 end;

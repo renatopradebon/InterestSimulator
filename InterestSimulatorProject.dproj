@@ -124,8 +124,10 @@
         <DCCReference Include="model\eInterface.Model.Price.pas"/>
         <DCCReference Include="model\eInterface.Model.Simulador.pas"/>
         <DCCReference Include="model\eInterface.Model.Sistema.pas"/>
-        <DCCReference Include="model\factory\eInterface.Model.Amortizacao.Factory.pas"/>
+        <DCCReference Include="model\factory\eInterface.Model.Resultado.Factory.pas"/>
         <DCCReference Include="model\factory\eInterface.Model.Simulador.Factory.pas"/>
+        <DCCReference Include="model\eInterface.Model.PagamentoUnico.Calculadora.pas"/>
+        <DCCReference Include="model\factory\eInterface.Model.Calculadora.Factory.pas"/>
         <None Include="ModelSupport_InterestSimulatorProject\default.txaPackage"/>
         <None Include="ModelSupport_InterestSimulatorProject\default.txvpck"/>
         <None Include="ModelSupport_InterestSimulatorProject\InterestSimulatorProject\default.txvpck"/>
@@ -179,13 +181,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="ModelSupport_InterestSimulatorProject\InterestSimulatorProject\default.txvpck" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="ModelSupport_InterestSimulatorProject\default.txaPackage" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="ModelSupport_InterestSimulatorProject\default.txaPackage" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="ModelSupport_InterestSimulatorProject\InterestSimulatorProject\default.txvpck" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>

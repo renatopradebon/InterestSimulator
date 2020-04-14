@@ -1,4 +1,4 @@
-﻿unit eInterface.Model.Amortizacao.Factory;
+﻿unit eInterface.Model.Resultado.Factory;
 
 interface
 
@@ -8,8 +8,9 @@ uses
   eInterface.Model.AmortizacaoMisto, eInterface.Model.Price;
 
 type
-  TModelAmortizacaoFactory = class(TInterfacedObject, iResultadoFactory)
+  TModelResultadoFactory = class(TInterfacedObject, iResultadoFactory)
     private
+      function PagamentoUnico : iResultado;
       function PagamentoVariavel : iResultado;
       function Americano : iResultado;
       function AmortizacaoConstante : iResultado;
@@ -20,7 +21,6 @@ type
       constructor Create;
       destructor Destroy; override;
       class function  New : iResultadoFactory;
-      function PagamentoUnico : iResultado;
   end;
 
 implementation
@@ -30,52 +30,52 @@ uses
 
 { TModelAmortizacaoFactory }
 
-function TModelAmortizacaoFactory.Alemao: iResultado;
+function TModelResultadoFactory.Alemao: iResultado;
 begin
   Result := TModelAmortizacaoAlemao.Create;
 end;
 
-function TModelAmortizacaoFactory.Americano: iResultado;
+function TModelResultadoFactory.Americano: iResultado;
 begin
   Result := TModelAmortizacaoAmericano.Create;
 end;
 
-function TModelAmortizacaoFactory.AmortizacaoConstante: iResultado;
+function TModelResultadoFactory.AmortizacaoConstante: iResultado;
 begin
   Result := TModelAmortizacaoAmortizacaoConstante.Create;
 end;
 
-function TModelAmortizacaoFactory.AmortizacaoMisto: iResultado;
+function TModelResultadoFactory.AmortizacaoMisto: iResultado;
 begin
   Result := TModelAmortizacaoAmortizacaoMisto.Create;
 end;
 
-constructor TModelAmortizacaoFactory.Create;
+constructor TModelResultadoFactory.Create;
 begin
 
 end;
 
-destructor TModelAmortizacaoFactory.Destroy;
+destructor TModelResultadoFactory.Destroy;
 begin
   inherited;
 end;
 
-class function TModelAmortizacaoFactory.New: iResultadoFactory;
+class function TModelResultadoFactory.New: iResultadoFactory;
 begin
     Result := Self.Create;
 end;
 
-function TModelAmortizacaoFactory.PagamentoUnico: iResultado;
+function TModelResultadoFactory.PagamentoUnico: iResultado;
 begin
   Result := TModelAmortizacaoPagamentoUnico.Create;
 end;
 
-function TModelAmortizacaoFactory.PagamentoVariavel: iResultado;
+function TModelResultadoFactory.PagamentoVariavel: iResultado;
 begin
   Result := TModelAmortizacaoPagamentoVariavel.Create;
 end;
 
-function TModelAmortizacaoFactory.Price: iResultado;
+function TModelResultadoFactory.Price: iResultado;
 begin
   Result := TModelAmortizacaoPrice.Create;
 end;

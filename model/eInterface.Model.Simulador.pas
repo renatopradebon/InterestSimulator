@@ -8,14 +8,14 @@ uses
 type
   TModelSimulador = class(TInterfacedObject, iSimulador)
   private
-    FCapital: Double;
-    FTaxaJuros: Double;
+    FCapital: Real;
+    FTaxaJuros: Real;
     FTotalParcelas: Integer;
     FTipoSistema :  TTypeSistema;
-    function Capital (Value : Double): iSimulador; overload;
-    function Capital : Double; overload;
-    function TaxaJuros (Value : Double): iSimulador; overload;
-    function TaxaJuros : Double; overload;
+    function Capital (Value : Real): iSimulador; overload;
+    function Capital : Real; overload;
+    function TaxaJuros (Value : Real): iSimulador; overload;
+    function TaxaJuros : Real; overload;
     function TotalParcelas (Value : Integer): iSimulador; overload;
     function TotalParcelas : Integer; overload;
     function TipoSistema (Value : TTypeSistema) : iSimulador; overload;
@@ -30,12 +30,12 @@ implementation
 
 { TModelSimulador }
 
-function TModelSimulador.Capital: Double;
+function TModelSimulador.Capital: Real;
 begin
   Result := FCapital;
 end;
 
-function TModelSimulador.Capital(Value: Double): iSimulador;
+function TModelSimulador.Capital(Value: Real): iSimulador;
 begin
   Result := Self;
   FCapital := Value;
@@ -56,7 +56,7 @@ begin
   Result := Self.Create;
 end;
 
-function TModelSimulador.TaxaJuros: Double;
+function TModelSimulador.TaxaJuros: Real;
 begin
   Result := FTaxaJuros;
 end;
@@ -83,7 +83,7 @@ begin
   FTipoSistema := Value;
 end;
 
-function TModelSimulador.TaxaJuros(Value: Double): iSimulador;
+function TModelSimulador.TaxaJuros(Value: Real): iSimulador;
 begin
   Result := Self;
   FTaxaJuros := Value;

@@ -6,16 +6,15 @@ uses
   System.Generics.Collections;
 
 type
-
   TTypeSistema = (tpAlemao, tpAmericano, tpAmortizacaoConstante,
     tpAmortizacaoMisto, tpPagamentoUnico, tpPagamentoVariavel, tpPrice);
 
   iSimulador = interface
     ['{3A7BC019-4141-4BA4-A54B-816C49D8194D}']
-    function Capital(Value: Double): iSimulador; overload;
-    function Capital: Double; overload;
-    function TaxaJuros(Value: Double): iSimulador; overload;
-    function TaxaJuros: Double; overload;
+    function Capital(Value: Real): iSimulador; overload;
+    function Capital: Real; overload;
+    function TaxaJuros(Value: Real): iSimulador; overload;
+    function TaxaJuros: Real; overload;
     function TotalParcelas(Value: Integer): iSimulador; overload;
     function TotalParcelas: Integer; overload;
     function TipoSistema(Value: TTypeSistema): iSimulador; overload;
@@ -26,14 +25,32 @@ type
     ['{E2D68003-B02B-47D9-99FC-EA394CBC64D1}']
     function NumeroParcela(Value: Integer): iResultado; overload;
     function NumeroParcela: Integer; overload;
-    function ValorJuros(Value: Double): iResultado; overload;
-    function ValorJuros: Double; overload;
-    function ValorAmortizacao(Value: Double): iResultado; overload;
-    function ValorAmortizacao: Double; overload;
-    function ValorSaldo(Value: Double): iResultado; overload;
-    function ValorSaldo: Double; overload;
-    function ValorPagamento(Value: Double): iResultado; overload;
-    function ValorPagamento: Double; overload;
+    function ValorJuros(Value: Real): iResultado; overload;
+    function ValorJuros: Real; overload;
+    function ValorAmortizacao(Value: Real): iResultado; overload;
+    function ValorAmortizacao: Real; overload;
+    function ValorSaldo(Value: Real): iResultado; overload;
+    function ValorSaldo: Real; overload;
+    function ValorPagamento(Value: Real): iResultado; overload;
+    function ValorPagamento: Real; overload;
+  end;
+
+  iCalculadora = interface
+    ['{44213C01-9F0A-47A5-9B39-CC53BAE1123A}']
+    function Resultados: Tlist<iResultado>;
+    function Calcular: iCalculadora;
+    function Simulador: iSimulador; overload;
+    function Simulador(Value: iSimulador): iCalculadora; overload;
+  end;
+
+  iCalculadoraFactory = interface
+    function PagamentoUnico: iCalculadora;
+    function PagamentoVariavel: iCalculadora;
+    function Americano: iCalculadora;
+    function AmortizacaoConstante: iCalculadora;
+    function Price: iCalculadora;
+    function AmortizacaoMisto: iCalculadora;
+    function Alemao: iCalculadora;
   end;
 
   iResultadoFactory = interface

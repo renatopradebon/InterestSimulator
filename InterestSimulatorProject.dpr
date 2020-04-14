@@ -17,8 +17,10 @@ uses
   eInterface.Model.Price in 'model\eInterface.Model.Price.pas',
   eInterface.Model.Simulador in 'model\eInterface.Model.Simulador.pas',
   eInterface.Model.Sistema in 'model\eInterface.Model.Sistema.pas',
-  eInterface.Model.Amortizacao.Factory in 'model\factory\eInterface.Model.Amortizacao.Factory.pas',
-  eInterface.Model.Simulador.Factory in 'model\factory\eInterface.Model.Simulador.Factory.pas';
+  eInterface.Model.Resultado.Factory in 'model\factory\eInterface.Model.Resultado.Factory.pas',
+  eInterface.Model.Simulador.Factory in 'model\factory\eInterface.Model.Simulador.Factory.pas',
+  eInterface.Model.PagamentoUnico.Calculadora in 'model\eInterface.Model.PagamentoUnico.Calculadora.pas',
+  eInterface.Model.Calculadora.Factory in 'model\factory\eInterface.Model.Calculadora.Factory.pas';
 
 {$R *.res}
 

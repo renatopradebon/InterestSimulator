@@ -8,7 +8,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Mask,
   Vcl.Grids, Data.DB, Datasnap.DBClient, Vcl.ComCtrls, Vcl.DBGrids,
   eInterface.Controller.Interfaces, eInterface.Model.Interfaces,
-  System.Generics.Collections, eInterface.Model.Sistema;
+  System.Generics.Collections, eInterface.Model.Sistema, Vcl.Buttons;
 
 type
   TfrmSimulate = class(TForm)
@@ -21,8 +21,6 @@ type
     MaskEditTaxaJuros: TMaskEdit;
     LabelParcelas: TLabel;
     MaskEditParcelas: TMaskEdit;
-    ButtonCalcular: TButton;
-    ButtonReset: TButton;
     ComboBoxSistema: TComboBox;
     LabelSistema: TLabel;
     DataSourceTemp: TDataSource;
@@ -35,18 +33,22 @@ type
     cdsTemporarioSALDO_DEVEDOR: TCurrencyField;
     cdsTemporarioPAGAMENTO: TCurrencyField;
     cdsTemporarioAMORTIZACAO_SALDO: TCurrencyField;
+    btnCalcular: TBitBtn;
+    btnReset: TBitBtn;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ButtonCalcularClick(Sender: TObject);
     procedure ButtonResetClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
-    FResultado: iResultado;
+    FResultados: TList<iResultado>;
     FDicionarioSistemas: TDictionary<TTypeSistema, iSistema>;
     procedure CalcularFinanciamento;
     procedure ResetForm;
     procedure PopulaComboSistemas;
     procedure PopulaSistemas;
-    function getSimulador: iSimulador;
+    procedure GerarDados;
+    procedure ClearDataSet;
     { Private declarations }
   public
     { Public declarations }
@@ -73,12 +75,18 @@ end;
 procedure TfrmSimulate.CalcularFinanciamento();
 begin
   try
-    FResultado := TControllerResultado
+    FResultados := TControllerResultado
                   .New
-                  .Simulador(getSimulador())
+                  .Simulador(TControllerResultado.New
+                                .SimuladorFactory.Capital(StrToFloatDef(MaskEditValorCapital.Text, cZERO))
+                                .TaxaJuros(StrToFloatDef(MaskEditTaxaJuros.Text, cZERO))
+                                .TotalParcelas(StrToIntDef(MaskEditParcelas.Text, cZERO))
+                                .TipoSistema(TTypeSistema(ComboBoxSistema.Items.Objects[ComboBoxSistema.ItemIndex])))
+                  .Calcular()
                   .Resultado();
+    GerarDados();
   finally
-
+//    FResultados.Free;
   end;
 end;
 
@@ -92,11 +100,22 @@ begin
   MaskEditValorCapital.Clear;
   MaskEditTaxaJuros.Clear;
   MaskEditParcelas.Clear;
+  ClearDataSet();
+end;
+
+procedure TfrmSimulate.ClearDataSet();
+begin
+   cdsTemporario.DisableControls;
+   try
+     cdsTemporario.EmptyDataSet;
+   finally
+     cdsTemporario.EnableControls;
+   end;
 end;
 
 procedure TfrmSimulate.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  FDicionarioSistemas.Free;
+  FreeAndNil(FResultados);
   Action := caFree;
   Release;
   frmSimulate := nil;
@@ -108,14 +127,10 @@ begin
   PopulaComboSistemas();
 end;
 
-function TfrmSimulate.getSimulador: iSimulador;
+procedure TfrmSimulate.FormDestroy(Sender: TObject);
 begin
-  Result := TControllerResultado.New.SimuladorFactory.Capital
-    (StrToFloatDef(MaskEditValorCapital.Text, cZERO))
-    .TaxaJuros(StrToFloatDef(MaskEditTaxaJuros.Text, cZERO))
-    .TotalParcelas(StrToIntDef(MaskEditParcelas.Text, cZERO))
-    .TipoSistema(TTypeSistema(ComboBoxSistema.ItemIndex));
-    end;
+  FDicionarioSistemas.Free;
+end;
 
 procedure TfrmSimulate.PopulaComboSistemas();
 var
@@ -126,16 +141,18 @@ begin
   begin
     // Validação utilizada porque é carregado um monte de Lixo no FDictionary
     if not String.IsNullOrEmpty(FDicionarioSistemas.Items[Key].Descricao) then
-      if FDicionarioSistemas.Items[Key].Habilitado then
-        ComboBoxSistema.Items.AddObject(FDicionarioSistemas.Items[Key].Descricao,
-          TObject(FDicionarioSistemas.Items[Key]));
+    begin
+      if (FDicionarioSistemas.Items[Key].Habilitado) then
+      begin
+        ComboBoxSistema.Items.AddObject(FDicionarioSistemas.Items[Key].Descricao, TObject(Key));
+      end;
+    end;
   end;
 end;
 
 procedure TfrmSimulate.PopulaSistemas();
 begin
   FDicionarioSistemas := TDictionary<TTypeSistema, iSistema>.Create;
-
   FDicionarioSistemas.Add(tpAlemao, TModelSistema.New.Descricao('Alemão')
     .Habilitado(False));
   FDicionarioSistemas.Add(tpAmericano, TModelSistema.New.Descricao('Americano')
@@ -150,6 +167,28 @@ begin
     TModelSistema.New.Descricao('Pagamento Variável').Habilitado(False));
   FDicionarioSistemas.Add(tpPrice, TModelSistema.New.Descricao('Price (Francês)')
     .Habilitado(False));
+end;
+
+procedure TfrmSimulate.GerarDados();
+var
+  FResultado: iResultado;
+begin
+  for FResultado in FResultados do
+  begin
+    cdsTemporario.Append;
+//    cdsTemporarioPARCELA.Value := FResultado.NumeroParcela;
+//    cdsTemporarioJUROS.Value := FResultado.ValorJuros;
+//    cdsTemporarioPAGAMENTO.Value := FResultado.ValorPagamento;
+//    cdsTemporarioAMORTIZACAO_SALDO.Value := FResultado.ValorSaldo;
+//    cdsTemporarioSALDO_DEVEDOR.Value := FResultado.ValorAmortizacao;
+
+    cdsTemporarioPARCELA.Value := FResultado.NumeroParcela;
+    cdsTemporarioJUROS.AsFloat := FResultado.ValorJuros;
+    cdsTemporarioPAGAMENTO.AsFloat := FResultado.ValorPagamento;
+    cdsTemporarioAMORTIZACAO_SALDO.AsFloat := FResultado.ValorSaldo;
+    cdsTemporario.FieldByName('SALDO_DEVEDOR').AsFloat := FResultado.ValorAmortizacao;
+    cdsTemporario.Post;
+  end;
 end;
 
 end.
