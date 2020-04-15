@@ -4,13 +4,16 @@ interface
 
 uses
   eInterestSimulator.Controller.Interfaces, eInterestSimulator.Model.Interfaces,
-  System.Generics.Collections;
+  System.Generics.Collections,
+  eInterestSimulator.Controller.Observer.Interfaces,
+  eInterestSimulator.Model.Interfaces.Calculadora;
 
 type
   TControllerResultado = class(TInterfacedObject, iControllerResultado)
     FSimulador: iSimulador;
     FResultados: TList<iResultado>;
     FCalculadora: iCalculadora;
+    FObserverResultado: iSubjectResultado;
   private
     function Simulador: iSimulador; overload;
     function Simulador(Value: iSimulador): iControllerResultado; overload;
@@ -24,13 +27,15 @@ type
     constructor Create;
     destructor Destroy; override;
     class function New: iControllerResultado;
+    function ObserverResultado : iSubjectResultado;
   end;
 
 implementation
 
 uses
   eInterestSimulator.Model.Calculadora.Factory, System.SysUtils,
-  eInterestSimulator.Model.Simulador.Factory;
+  eInterestSimulator.Model.Simulador.Factory,
+  eInterestSimulator.Controller.Resultado.Observer;
 
 { TControllerResultado }
 
@@ -62,12 +67,16 @@ begin
       FCalculadora := TModelCalculadoraFactory.New.Price;
   end;
 
-  FResultados := FCalculadora.Simulador(FSimulador).Calcular.Resultados;
+  FResultados := FCalculadora
+                  .Simulador(FSimulador)
+                  .ObserverResultado(FObserverResultado)
+                  .Calcular
+                  .Resultados;
 end;
 
 constructor TControllerResultado.Create;
 begin
-
+  FObserverResultado := TControllerObserverResultado.New;
 end;
 
 destructor TControllerResultado.Destroy;
@@ -78,6 +87,11 @@ end;
 class function TControllerResultado.New: iControllerResultado;
 begin
   Result := Self.Create;
+end;
+
+function TControllerResultado.ObserverResultado: iSubjectResultado;
+begin
+  Result := FObserverResultado;
 end;
 
 function TControllerResultado.Resultado(Value: TList<iResultado>)

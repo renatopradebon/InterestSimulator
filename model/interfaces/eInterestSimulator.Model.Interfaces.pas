@@ -35,24 +35,6 @@ type
     function ValorPagamento: Real; overload;
   end;
 
-  iCalculadora = interface
-    ['{44213C01-9F0A-47A5-9B39-CC53BAE1123A}']
-    function Resultados: Tlist<iResultado>;
-    function Calcular: iCalculadora;
-    function Simulador: iSimulador; overload;
-    function Simulador(Value: iSimulador): iCalculadora; overload;
-  end;
-
-  iCalculadoraFactory = interface
-    function PagamentoUnico: iCalculadora;
-    function PagamentoVariavel: iCalculadora;
-    function Americano: iCalculadora;
-    function AmortizacaoConstante: iCalculadora;
-    function Price: iCalculadora;
-    function AmortizacaoMisto: iCalculadora;
-    function Alemao: iCalculadora;
-  end;
-
   iResultadoFactory = interface
     ['{992B706D-CC77-4905-8406-883CA7675274}']
     function PagamentoUnico: iResultado;

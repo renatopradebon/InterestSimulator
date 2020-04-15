@@ -70,16 +70,19 @@ end;
 
 function TControllerSistema.SistemasLiberadosList: TList<iSistema>;
 var
-  SistemasLiberados: TList<iSistema>;
   Sistema: iSistema;
+  FSistemasLiberados: TList<iSistema>;
 begin
-  SistemasLiberados := TList<iSistema>.Create;
+  FSistemasLiberados := TList<iSistema>.Create;
   for Sistema in FDicionarioSistemas.Values do
   begin
     if Sistema.Habilitado() then
-      SistemasLiberados.Add(Sistema);
+      FSistemasLiberados.Add(Sistema);
   end;
-  Result := SistemasLiberados;
+
+  {TODO -oRenatoPradebon -cGeneral : aqui tem um problema memory leak que eu não consegui resolver}
+  Result := TList<iSistema>.Create(FSistemasLiberados);
+  FreeandNil(FSistemasLiberados);
 end;
 
 function TControllerSistema.SistemasLiberados

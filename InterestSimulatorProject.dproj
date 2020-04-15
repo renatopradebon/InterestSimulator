@@ -129,6 +129,9 @@
         <DCCReference Include="model\factory\eInterestSimulator.Model.Calculadora.Factory.pas"/>
         <DCCReference Include="controller\eInterestSimulator.Controller.Sistema.pas"/>
         <DCCReference Include="controller\interfaces\eInterestSimulator.Controller.Interfaces.pas"/>
+        <DCCReference Include="controller\interfaces\eInterestSimulator.Controller.Observer.Interfaces.pas"/>
+        <DCCReference Include="controller\eInterestSimulator.Controller.Resultado.Observer.pas"/>
+        <DCCReference Include="model\interfaces\eInterestSimulator.Model.Interfaces.Calculadora.pas"/>
         <None Include="ModelSupport_InterestSimulatorProject\default.txaPackage"/>
         <None Include="ModelSupport_InterestSimulatorProject\default.txvpck"/>
         <None Include="ModelSupport_InterestSimulatorProject\InterestSimulatorProject\default.txvpck"/>
@@ -182,12 +185,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="ModelSupport_InterestSimulatorProject\InterestSimulatorProject\default.txvpck" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="ModelSupport_InterestSimulatorProject\default.txaPackage" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
@@ -195,6 +192,12 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="ModelSupport_InterestSimulatorProject\eInterestSimulator\Model\default.txvpck" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="ModelSupport_InterestSimulatorProject\InterestSimulatorProject\default.txvpck" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>

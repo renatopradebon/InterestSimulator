@@ -7,10 +7,12 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Mask,
   Vcl.Grids, Data.DB, Datasnap.DBClient, Vcl.ComCtrls, Vcl.DBGrids, Vcl.Buttons,
-  System.Generics.Collections, eInterestSimulator.Model.Interfaces;
+  System.Generics.Collections, eInterestSimulator.Model.Interfaces,
+  eInterestSimulator.Controller.Observer.Interfaces,
+  eInterestSimulator.Controller.Interfaces;
 
 type
-  TfrmSimulate = class(TForm)
+  TfrmSimulate = class(TForm, iObserverResultado)
     PanelDados: TPanel;
     GroupBox1: TGroupBox;
     GroupBox2: TGroupBox;
@@ -38,10 +40,13 @@ type
     procedure ButtonCalcularClick(Sender: TObject);
     procedure ButtonResetClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
+    procedure MaskEditValorCapitalKeyPress(Sender: TObject; var Key: Char);
+    procedure MaskEditTaxaJurosKeyPress(Sender: TObject; var Key: Char);
+    procedure MaskEditParcelasKeyPress(Sender: TObject; var Key: Char);
   private
     FResultados: TList<iResultado>;
     FListaSistemas: TList<iSistema>;
+    FControllerResultados: iControllerResultado;
     procedure CalcularFinanciamento;
     procedure ResetForm;
     procedure PopulaComboSistemas;
@@ -51,6 +56,7 @@ type
     procedure ShowStatusBar;
     function FormataValorCurrency(AValor: Real): String;
     procedure ModificaTituloForm;
+    function UpdateResultado(Value: Tlist<iResultado>): iObserverResultado;
     { Private declarations }
   public
     { Public declarations }
@@ -72,21 +78,20 @@ uses
 
 procedure TfrmSimulate.ButtonCalcularClick(Sender: TObject);
 begin
+  ClearDataSet();
   CalcularFinanciamento();
 end;
 
 procedure TfrmSimulate.CalcularFinanciamento();
 begin
   try
-    FResultados := TControllerResultado.New.Simulador
-      (TControllerResultado.New.SimuladorFactory.Capital
-      (StrToFloatDef(MaskEditValorCapital.Text, cZERO))
-      .TaxaJuros(StrToFloatDef(MaskEditTaxaJuros.Text, cZERO))
-      .TotalParcelas(StrToIntDef(MaskEditParcelas.Text, cZERO))
-      .TipoSistema(TTypeSistema(ComboBoxSistema.Items.Objects
-      [ComboBoxSistema.ItemIndex]))).Calcular().Resultado();
-    GerarDadosGrid();
-    ShowStatusBar();
+    FControllerResultados := FControllerResultados
+                              .Simulador(TControllerResultado.New.SimuladorFactory
+                                .Capital(StrToFloatDef(MaskEditValorCapital.Text, cZERO))
+                                .TaxaJuros(StrToFloatDef(MaskEditTaxaJuros.Text, cZERO))
+                                .TotalParcelas(StrToIntDef(MaskEditParcelas.Text, cZERO))
+                                .TipoSistema(TTypeSistema(ComboBoxSistema.Items.Objects[ComboBoxSistema.ItemIndex])))
+                    .Calcular();
   finally
 
   end;
@@ -99,9 +104,11 @@ end;
 
 procedure TfrmSimulate.ResetForm();
 begin
+  ComboBoxSistema.ClearSelection;
   MaskEditValorCapital.Clear;
   MaskEditTaxaJuros.Clear;
   MaskEditParcelas.Clear;
+  ComboBoxSistema.SetFocus;
   ClearDataSet();
 end;
 
@@ -113,6 +120,7 @@ begin
   finally
     CDResultado.EnableControls;
   end;
+  ShowStatusBar();
 end;
 
 procedure TfrmSimulate.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -127,18 +135,16 @@ begin
   PopulaSistemas();
   PopulaComboSistemas();
   ModificaTituloForm();
-end;
 
-procedure TfrmSimulate.FormDestroy(Sender: TObject);
-begin
-  FResultados.Free;
-  FListaSistemas.Free;
+  FControllerResultados := TControllerResultado.New;
+  FControllerResultados.ObserverResultado.Add(Self);
 end;
 
 procedure TfrmSimulate.ModificaTituloForm();
+const
+  cTITULO_SIMULADOR = 'Simular Financiamento >> Iniciado em %s as %s';
 begin
-  Self.Caption := System.SysUtils.Format
-    ('Simular Financiamento || Iniciado em %s as %s',
+  Self.Caption := System.SysUtils.Format(cTITULO_SIMULADOR,
     [FormatDateTime('dd/mm/yyyy', Now), FormatDateTime('hh:nn:ss', Now)]);
 end;
 
@@ -195,9 +201,39 @@ begin
   HashStatusBarXAgregate.Free;
 end;
 
+function TfrmSimulate.UpdateResultado(Value: Tlist<iResultado>): iObserverResultado;
+begin
+  FResultados := Value;
+  GerarDadosGrid();
+  ShowStatusBar();
+end;
+
 function TfrmSimulate.FormataValorCurrency(AValor: Real): String;
 begin
   Result := FormatFloat('###,###,##0.00', AValor);
+end;
+
+procedure TfrmSimulate.MaskEditParcelasKeyPress(Sender: TObject; var Key: Char);
+begin
+    // Evita a digita��o de letras e pontos no campo de valor
+  if not (CharInSet(Key, ['0'..'9', #8, #44])) then
+    Key := #0;
+end;
+
+procedure TfrmSimulate.MaskEditTaxaJurosKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+    // Evita a digita��o de letras e pontos no campo de valor
+  if not (CharInSet(Key, ['0'..'9', #8, #44])) then
+    Key := #0;
+end;
+
+procedure TfrmSimulate.MaskEditValorCapitalKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+    // Evita a digita��o de letras e pontos no campo de valor
+  if not (CharInSet(Key, ['0'..'9', #8, #44])) then
+    Key := #0;
 end;
 
 end.

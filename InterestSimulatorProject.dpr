@@ -21,7 +21,10 @@ uses
   eInterestSimulator.Model.PagamentoUnico.Calculadora in 'model\eInterestSimulator.Model.PagamentoUnico.Calculadora.pas',
   eInterestSimulator.Model.Calculadora.Factory in 'model\factory\eInterestSimulator.Model.Calculadora.Factory.pas',
   eInterestSimulator.Controller.Sistema in 'controller\eInterestSimulator.Controller.Sistema.pas',
-  eInterestSimulator.Controller.Interfaces in 'controller\interfaces\eInterestSimulator.Controller.Interfaces.pas';
+  eInterestSimulator.Controller.Interfaces in 'controller\interfaces\eInterestSimulator.Controller.Interfaces.pas',
+  eInterestSimulator.Controller.Observer.Interfaces in 'controller\interfaces\eInterestSimulator.Controller.Observer.Interfaces.pas',
+  eInterestSimulator.Controller.Resultado.Observer in 'controller\eInterestSimulator.Controller.Resultado.Observer.pas',
+  eInterestSimulator.Model.Interfaces.Calculadora in 'model\interfaces\eInterestSimulator.Model.Interfaces.Calculadora.pas';
 
 {$R *.res}
 

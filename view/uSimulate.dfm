@@ -12,7 +12,6 @@ object frmSimulate: TfrmSimulate
   Visible = True
   OnClose = FormClose
   OnCreate = FormCreate
-  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
   object PanelDados: TPanel
@@ -71,25 +70,33 @@ object frmSimulate: TfrmSimulate
         TabOrder = 1
         Text = '300000'
         TextHint = 'Valor que deseja receber'
+        OnKeyPress = MaskEditValorCapitalKeyPress
       end
       object MaskEditTaxaJuros: TMaskEdit
         Left = 335
         Top = 34
         Width = 151
         Height = 21
+        Hint = 'Taxa de Juros'
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 2
         Text = '4'
+        TextHint = 'Taxas de Juros aplicada'
+        OnKeyPress = MaskEditTaxaJurosKeyPress
       end
       object MaskEditParcelas: TMaskEdit
         Left = 502
         Top = 34
         Width = 153
         Height = 21
+        Hint = 'N'#250'mero de parcelas do financiamento'
         ParentShowHint = False
         ShowHint = True
         TabOrder = 3
         Text = '5'
-        TextHint = 'Numero de parcelas'
+        TextHint = 'N'#250'mero de parcelas do financiamento'
+        OnKeyPress = MaskEditParcelasKeyPress
       end
       object ComboBoxSistema: TComboBox
         Left = 11

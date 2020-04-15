@@ -3,7 +3,8 @@ unit eInterestSimulator.Controller.Interfaces;
 interface
 
 uses
-  eInterestSimulator.Model.Interfaces, System.Generics.Collections;
+  eInterestSimulator.Model.Interfaces, System.Generics.Collections,
+  eInterestSimulator.Controller.Observer.Interfaces;
 
 type
 
@@ -17,6 +18,7 @@ type
     function Simulador(Value: iSimulador): iControllerResultado; overload;
     function SimuladorFactory: iSimulador;
     procedure ValidarDados;
+    function ObserverResultado : iSubjectResultado;
   end;
 
   iControllerSistema = interface

@@ -3,7 +3,7 @@ unit eInterestSimulator.Model.Calculadora.Factory;
 interface
 
 uses
-  eInterestSimulator.Model.Interfaces;
+  eInterestSimulator.Model.Interfaces.Calculadora;
 
 type
   TModelCalculadoraFactory = class(TInterfacedObject, iCalculadoraFactory)

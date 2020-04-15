@@ -3,13 +3,16 @@ unit eInterestSimulator.Model.PagamentoUnico.Calculadora;
 interface
 
 uses
-  eInterestSimulator.Model.Interfaces, System.Generics.Collections;
+  eInterestSimulator.Model.Interfaces, System.Generics.Collections,
+  eInterestSimulator.Controller.Observer.Interfaces,
+  eInterestSimulator.Model.Interfaces.Calculadora;
 
 type
   TModelPagamentoUnicoCalculadora = class(TInterfacedObject, iCalculadora)
   private
     FSimulador: iSimulador;
     FResultados: TList<iResultado>;
+    FObserverResultado : iSubjectResultado;
     function Resultados: TList<iResultado>;
     function Calcular: iCalculadora;
     function Simulador: iSimulador; overload;
@@ -18,12 +21,14 @@ type
     constructor Create;
     destructor Destroy; override;
     class function New: iCalculadora;
+    function ObserverResultado(Value : iSubjectResultado): iCalculadora; overload;
+    function ObserverResultado: iSubjectResultado; overload;
   end;
 
 implementation
 
 uses
-  eInterestSimulator.Model.Resultado.Factory;
+  eInterestSimulator.Model.Resultado.Factory, System.SysUtils;
 
 { TModelPagamentoUnicoCalculadora }
 
@@ -67,6 +72,8 @@ begin
       FValorAcumulado := (FValorAcumulado + FJuros);
     end;
   end;
+
+  FObserverResultado.Notify(FResultados);
 end;
 
 constructor TModelPagamentoUnicoCalculadora.Create;
@@ -83,6 +90,18 @@ end;
 class function TModelPagamentoUnicoCalculadora.New: iCalculadora;
 begin
   Result := Self.Create;
+end;
+
+function TModelPagamentoUnicoCalculadora.ObserverResultado: iSubjectResultado;
+begin
+  Result := FObserverResultado;
+end;
+
+function TModelPagamentoUnicoCalculadora.ObserverResultado(
+  Value: iSubjectResultado): iCalculadora;
+begin
+  Result := Self;
+  FObserverResultado := Value;
 end;
 
 function TModelPagamentoUnicoCalculadora.Simulador: iSimulador;
