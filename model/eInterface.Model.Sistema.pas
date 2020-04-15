@@ -10,10 +10,13 @@ type
   private
     FDescricao: String;
     FHabilitado: Boolean;
+    FTipoSistema: TTypeSistema;
     function Descricao(Value: String) : iSistema; overload;
     function Descricao: String; overload;
     function Habilitado(Value: Boolean): iSistema; overload;
     function Habilitado: Boolean; overload;
+    function TipoSistema(Value: TTypeSistema): iSistema; overload;
+    function TipoSistema: TTypeSistema; overload;
   public
     constructor Create;
     destructor Destroy; override;
@@ -61,6 +64,15 @@ begin
   Result := Self.Create;
 end;
 
+function TModelSistema.TipoSistema: TTypeSistema;
+begin
+  Result := FTipoSistema;
+end;
 
+function TModelSistema.TipoSistema(Value: TTypeSistema): iSistema;
+begin
+  Result := Self;
+  FTipoSistema := Value;
+end;
 
 end.

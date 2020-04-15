@@ -6,9 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Mask,
-  Vcl.Grids, Data.DB, Datasnap.DBClient, Vcl.ComCtrls, Vcl.DBGrids,
-  eInterface.Controller.Interfaces, eInterface.Model.Interfaces,
-  System.Generics.Collections, eInterface.Model.Sistema, Vcl.Buttons;
+  Vcl.Grids, Data.DB, Datasnap.DBClient, Vcl.ComCtrls, Vcl.DBGrids, Vcl.Buttons,
+  System.Generics.Collections, eInterface.Model.Interfaces;
 
 type
   TfrmSimulate = class(TForm)
@@ -23,18 +22,18 @@ type
     MaskEditParcelas: TMaskEdit;
     ComboBoxSistema: TComboBox;
     LabelSistema: TLabel;
-    DataSourceTemp: TDataSource;
-    DBGrid1: TDBGrid;
-    StatusBar1: TStatusBar;
+    DataSourceResultado: TDataSource;
+    DBGridResultado: TDBGrid;
+    StatusBarResultado: TStatusBar;
     PanelResultado: TPanel;
-    cdsTemporario: TClientDataSet;
-    cdsTemporarioPARCELA: TIntegerField;
-    cdsTemporarioJUROS: TFloatField;
-    cdsTemporarioSALDO_DEVEDOR: TCurrencyField;
-    cdsTemporarioPAGAMENTO: TCurrencyField;
-    cdsTemporarioAMORTIZACAO_SALDO: TCurrencyField;
     btnCalcular: TBitBtn;
     btnReset: TBitBtn;
+    CDResultado: TClientDataSet;
+    CDResultadoPARCELA: TIntegerField;
+    CDResultadoJUROS: TCurrencyField;
+    CDResultadoSALDO_DEVEDOR: TCurrencyField;
+    CDResultadoPAGAMENTO: TCurrencyField;
+    CDResultadoAMORTIZACAO_SALDO: TCurrencyField;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ButtonCalcularClick(Sender: TObject);
     procedure ButtonResetClick(Sender: TObject);
@@ -42,13 +41,16 @@ type
     procedure FormDestroy(Sender: TObject);
   private
     FResultados: TList<iResultado>;
-    FDicionarioSistemas: TDictionary<TTypeSistema, iSistema>;
+    FListaSistemas: TList<iSistema>;
     procedure CalcularFinanciamento;
     procedure ResetForm;
     procedure PopulaComboSistemas;
     procedure PopulaSistemas;
-    procedure GerarDados;
+    procedure GerarDadosGrid;
     procedure ClearDataSet;
+    procedure ShowStatusBar;
+    function FormataValorCurrency(AValor: Real): String;
+    procedure ModificaTituloForm;
     { Private declarations }
   public
     { Public declarations }
@@ -63,7 +65,7 @@ const
 implementation
 
 uses
-  eInterface.Controller.Resultado;
+  eInterface.Controller.Resultado, eInterface.Controller.Sistema;
 
 {$R *.dfm}
 
@@ -84,9 +86,10 @@ begin
                                 .TipoSistema(TTypeSistema(ComboBoxSistema.Items.Objects[ComboBoxSistema.ItemIndex])))
                   .Calcular()
                   .Resultado();
-    GerarDados();
+    GerarDadosGrid();
+    ShowStatusBar();
   finally
-//    FResultados.Free;
+
   end;
 end;
 
@@ -105,17 +108,16 @@ end;
 
 procedure TfrmSimulate.ClearDataSet();
 begin
-   cdsTemporario.DisableControls;
+   CDResultado.DisableControls;
    try
-     cdsTemporario.EmptyDataSet;
+     CDResultado.EmptyDataSet;
    finally
-     cdsTemporario.EnableControls;
+     CDResultado.EnableControls;
    end;
 end;
 
 procedure TfrmSimulate.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  FreeAndNil(FResultados);
   Action := caFree;
   Release;
   frmSimulate := nil;
@@ -125,70 +127,75 @@ procedure TfrmSimulate.FormCreate(Sender: TObject);
 begin
   PopulaSistemas();
   PopulaComboSistemas();
+  ModificaTituloForm();
 end;
 
 procedure TfrmSimulate.FormDestroy(Sender: TObject);
 begin
-  FDicionarioSistemas.Free;
+  FResultados.Free;
+  FListaSistemas.Free;
+end;
+
+procedure TfrmSimulate.ModificaTituloForm();
+begin
+  Self.Caption := System.SysUtils.Format('Simular Financiamento || Iniciado em %s as %s',
+  [FormatDateTime('dd/mm/yyyy', Now), FormatDateTime('hh:nn:ss', Now)]);
 end;
 
 procedure TfrmSimulate.PopulaComboSistemas();
 var
-  Key: TTypeSistema;
+  Sistema: iSistema;
 begin
   ComboBoxSistema.Items.Clear;
-  for Key in FDicionarioSistemas.Keys do
-  begin
-    // Validação utilizada porque é carregado um monte de Lixo no FDictionary
-    if not String.IsNullOrEmpty(FDicionarioSistemas.Items[Key].Descricao) then
-    begin
-      if (FDicionarioSistemas.Items[Key].Habilitado) then
-      begin
-        ComboBoxSistema.Items.AddObject(FDicionarioSistemas.Items[Key].Descricao, TObject(Key));
-      end;
-    end;
-  end;
+  for Sistema in FListaSistemas do
+    ComboBoxSistema.Items.AddObject(Sistema.Descricao, TObject(Sistema.TipoSistema));
 end;
 
 procedure TfrmSimulate.PopulaSistemas();
 begin
-  FDicionarioSistemas := TDictionary<TTypeSistema, iSistema>.Create;
-  FDicionarioSistemas.Add(tpAlemao, TModelSistema.New.Descricao('Alemão')
-    .Habilitado(False));
-  FDicionarioSistemas.Add(tpAmericano, TModelSistema.New.Descricao('Americano')
-    .Habilitado(False));
-  FDicionarioSistemas.Add(tpAmortizacaoConstante,
-    TModelSistema.New.Descricao('Amortização Constante').Habilitado(False));
-  FDicionarioSistemas.Add(tpAmortizacaoMisto,
-    TModelSistema.New.Descricao('Amortização Misto').Habilitado(False));
-  FDicionarioSistemas.Add(tpPagamentoUnico,
-    TModelSistema.New.Descricao('Pagamento Único').Habilitado(True));
-  FDicionarioSistemas.Add(tpPagamentoVariavel,
-    TModelSistema.New.Descricao('Pagamento Variável').Habilitado(False));
-  FDicionarioSistemas.Add(tpPrice, TModelSistema.New.Descricao('Price (Francês)')
-    .Habilitado(False));
+  FListaSistemas := TControllerSistema.New.SistemasLiberadosList;
 end;
 
-procedure TfrmSimulate.GerarDados();
+procedure TfrmSimulate.GerarDadosGrid();
 var
   FResultado: iResultado;
 begin
   for FResultado in FResultados do
   begin
-    cdsTemporario.Append;
-//    cdsTemporarioPARCELA.Value := FResultado.NumeroParcela;
-//    cdsTemporarioJUROS.Value := FResultado.ValorJuros;
-//    cdsTemporarioPAGAMENTO.Value := FResultado.ValorPagamento;
-//    cdsTemporarioAMORTIZACAO_SALDO.Value := FResultado.ValorSaldo;
-//    cdsTemporarioSALDO_DEVEDOR.Value := FResultado.ValorAmortizacao;
-
-    cdsTemporarioPARCELA.Value := FResultado.NumeroParcela;
-    cdsTemporarioJUROS.AsFloat := FResultado.ValorJuros;
-    cdsTemporarioPAGAMENTO.AsFloat := FResultado.ValorPagamento;
-    cdsTemporarioAMORTIZACAO_SALDO.AsFloat := FResultado.ValorSaldo;
-    cdsTemporario.FieldByName('SALDO_DEVEDOR').AsFloat := FResultado.ValorAmortizacao;
-    cdsTemporario.Post;
+    CDResultado.Append;
+    CDResultadoPARCELA.Value := FResultado.NumeroParcela;
+    CDResultadoJUROS.Value := FResultado.ValorJuros;
+    CDResultadoPAGAMENTO.Value := FResultado.ValorPagamento;
+    CDResultadoAMORTIZACAO_SALDO.Value := FResultado.ValorAmortizacao;
+    CDResultadoSALDO_DEVEDOR.Value := FResultado.ValorSaldo;
+    CDResultado.Post;
   end;
+end;
+
+procedure TfrmSimulate.ShowStatusBar();
+var
+  Key, KeyAggregate : Integer;
+  HashStatusBarXAgregate : TDictionary<Integer,Integer>;
+begin
+  HashStatusBarXAgregate := TDictionary<Integer,Integer>.Create;
+  HashStatusBarXAgregate.Add(1,0);
+  HashStatusBarXAgregate.Add(2,1);
+  HashStatusBarXAgregate.Add(3,2);
+
+  for Key in HashStatusBarXAgregate.Keys do
+  begin
+    KeyAggregate := HashStatusBarXAgregate.Items[Key];
+
+    StatusBarResultado.Panels[Key].Text := EmptyStr;
+    if not VarIsNull(CDResultado.Aggregates[KeyAggregate].Value) then
+      StatusBarResultado.Panels[Key].Text := FormataValorCurrency(CDResultado.Aggregates[KeyAggregate].Value);
+  end;
+  HashStatusBarXAgregate.Free;
+end;
+
+function TfrmSimulate.FormataValorCurrency(AValor: Real): String;
+begin
+  Result := FormatFloat('###,###,##0.00', AValor);
 end;
 
 end.

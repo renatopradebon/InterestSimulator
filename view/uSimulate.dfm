@@ -195,13 +195,14 @@ object frmSimulate: TfrmSimulate
       Height = 443
       Caption = 'Resultado'
       TabOrder = 0
-      object DBGrid1: TDBGrid
+      object DBGridResultado: TDBGrid
         Left = 2
         Top = 15
         Width = 949
         Height = 407
         Align = alClient
-        DataSource = DataSourceTemp
+        DataSource = DataSourceResultado
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
         ReadOnly = True
         TabOrder = 0
         TitleFont.Charset = DEFAULT_CHARSET
@@ -211,38 +212,36 @@ object frmSimulate: TfrmSimulate
         TitleFont.Style = []
         Columns = <
           item
-            Alignment = taLeftJustify
             Expanded = False
             FieldName = 'PARCELA'
-            Width = 51
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'JUROS'
-            Width = 145
+            Width = 104
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'AMORTIZACAO_SALDO'
-            Width = 298
+            Width = 225
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'PAGAMENTO'
-            Width = 191
+            Width = 172
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'SALDO_DEVEDOR'
-            Width = 243
+            Width = 175
             Visible = True
           end>
       end
-      object StatusBar1: TStatusBar
+      object StatusBarResultado: TStatusBar
         Left = 2
         Top = 422
         Width = 949
@@ -250,13 +249,19 @@ object frmSimulate: TfrmSimulate
         Panels = <
           item
             Text = 'Totais'
-            Width = 50
+            Width = 77
           end
           item
-            Width = 50
+            Alignment = taRightJustify
+            Width = 104
           end
           item
-            Width = 50
+            Alignment = taRightJustify
+            Width = 225
+          end
+          item
+            Alignment = taRightJustify
+            Width = 172
           end
           item
             Width = 50
@@ -264,62 +269,66 @@ object frmSimulate: TfrmSimulate
       end
     end
   end
-  object DataSourceTemp: TDataSource
-    DataSet = cdsTemporario
-    Left = 624
-    Top = 336
+  object DataSourceResultado: TDataSource
+    DataSet = CDResultado
+    Left = 552
+    Top = 296
   end
-  object cdsTemporario: TClientDataSet
+  object CDResultado: TClientDataSet
     PersistDataPacket.Data = {
-      2A0000009619E0BD0100000018000000010000000000030000002A0007504152
-      43454C4104000100000000000000}
+      B60000009619E0BD010000001800000005000000000003000000B60007504152
+      43454C410400010000000000054A55524F53080004000000000011414D4F5254
+      495A4143414F5F53414C444F0800040000000100075355425459504502004900
+      06004D6F6E65790009504147414D454E544F0800040000000100075355425459
+      50450200490006004D6F6E6579000D53414C444F5F44455645444F5208000400
+      0000010007535542545950450200490006004D6F6E6579000000}
     Active = True
     Aggregates = <
       item
-        AggregateName = 'JUROS'
+        Active = True
+        AggregateName = 'TOTAL_JUROS'
+        Expression = 'SUM(JUROS)'
         Visible = False
       end
       item
-        AggregateName = 'AMORTIZACAO'
+        Active = True
+        AggregateName = 'TOTAL_AMORTIZACAO'
+        Expression = 'SUM(AMORTIZACAO_SALDO)'
         Visible = False
       end
       item
-        AggregateName = 'PAGAMENTO'
+        Active = True
+        AggregateName = 'TOTAL_PAGAMENTO'
+        Expression = 'SUM(PAGAMENTO)'
         Visible = False
       end>
     AggregatesActive = True
     Params = <>
-    Left = 552
-    Top = 336
-    object cdsTemporarioPARCELA: TIntegerField
+    Left = 464
+    Top = 296
+    object CDResultadoPARCELA: TIntegerField
       DisplayLabel = 'Parcela'
       FieldName = 'PARCELA'
-      DisplayFormat = '00000'
-      EditFormat = '00000'
     end
-    object cdsTemporarioJUROS: TFloatField
+    object CDResultadoJUROS: TCurrencyField
       DisplayLabel = 'Juros'
-      FieldKind = fkCalculated
       FieldName = 'JUROS'
-      Calculated = True
+      EditFormat = 'R$%d.%.2d'
     end
-    object cdsTemporarioAMORTIZACAO_SALDO: TCurrencyField
+    object CDResultadoAMORTIZACAO_SALDO: TCurrencyField
       DisplayLabel = 'Amortiza'#231#227'o Saldo Devedor'
-      FieldKind = fkCalculated
       FieldName = 'AMORTIZACAO_SALDO'
-      Calculated = True
+      EditFormat = '%d.%.2d'
     end
-    object cdsTemporarioPAGAMENTO: TCurrencyField
+    object CDResultadoPAGAMENTO: TCurrencyField
       DisplayLabel = 'Pagamento'
-      FieldKind = fkCalculated
       FieldName = 'PAGAMENTO'
-      Calculated = True
+      EditFormat = '%d.%.2d'
     end
-    object cdsTemporarioSALDO_DEVEDOR: TCurrencyField
+    object CDResultadoSALDO_DEVEDOR: TCurrencyField
       DisplayLabel = 'Saldo devedor'
-      FieldKind = fkCalculated
       FieldName = 'SALDO_DEVEDOR'
-      Calculated = True
+      EditFormat = '%d.%.2d'
     end
   end
 end

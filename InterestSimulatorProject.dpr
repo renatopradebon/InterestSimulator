@@ -20,7 +20,8 @@ uses
   eInterface.Model.Resultado.Factory in 'model\factory\eInterface.Model.Resultado.Factory.pas',
   eInterface.Model.Simulador.Factory in 'model\factory\eInterface.Model.Simulador.Factory.pas',
   eInterface.Model.PagamentoUnico.Calculadora in 'model\eInterface.Model.PagamentoUnico.Calculadora.pas',
-  eInterface.Model.Calculadora.Factory in 'model\factory\eInterface.Model.Calculadora.Factory.pas';
+  eInterface.Model.Calculadora.Factory in 'model\factory\eInterface.Model.Calculadora.Factory.pas',
+  eInterface.Controller.Sistema in 'controller\eInterface.Controller.Sistema.pas';
 
 {$R *.res}
 

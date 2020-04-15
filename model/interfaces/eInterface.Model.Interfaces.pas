@@ -75,6 +75,8 @@ type
     function Descricao: String; overload;
     function Habilitado(Value: Boolean): iSistema; overload;
     function Habilitado: Boolean; overload;
+    function TipoSistema(Value: TTypeSistema): iSistema; overload;
+    function TipoSistema: TTypeSistema; overload;
   end;
 
 implementation
