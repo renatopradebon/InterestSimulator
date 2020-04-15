@@ -72,7 +72,7 @@ end;
 
 procedure TfrmParent.FormCreate(Sender: TObject);
 begin
-  ReportMemoryLeaksOnShutdown := True;
+  ReportMemoryLeaksOnShutdown :=  DebugHook = 1;
 end;
 
 end.
