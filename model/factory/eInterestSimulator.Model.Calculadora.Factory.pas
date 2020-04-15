@@ -1,9 +1,9 @@
-unit eInterface.Model.Calculadora.Factory;
+unit eInterestSimulator.Model.Calculadora.Factory;
 
 interface
 
 uses
-  eInterface.Model.Interfaces;
+  eInterestSimulator.Model.Interfaces;
 
 type
   TModelCalculadoraFactory = class(TInterfacedObject, iCalculadoraFactory)
@@ -24,7 +24,8 @@ type
 implementation
 
 uses
-  eInterface.Model.Simulador, eInterface.Model.PagamentoUnico.Calculadora;
+  eInterestSimulator.Model.Simulador,
+  eInterestSimulator.Model.PagamentoUnico.Calculadora;
 
 { TModelCalculadoraFactory }
 
@@ -62,7 +63,6 @@ class function TModelCalculadoraFactory.New: iCalculadoraFactory;
 begin
   Result := Self.Create;
 end;
-
 
 function TModelCalculadoraFactory.PagamentoUnico: iCalculadora;
 begin

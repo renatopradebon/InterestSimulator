@@ -1,9 +1,9 @@
-﻿unit eInterface.Controller.Resultado;
+﻿unit eInterestSimulator.Controller.Resultado;
 
 interface
 
 uses
-  eInterface.Controller.Interfaces, eInterface.Model.Interfaces,
+  eInterestSimulator.Controller.Interfaces, eInterestSimulator.Model.Interfaces,
   System.Generics.Collections;
 
 type
@@ -15,7 +15,8 @@ type
     function Simulador: iSimulador; overload;
     function Simulador(Value: iSimulador): iControllerResultado; overload;
     function Resultado: TList<iResultado>; overload;
-    function Resultado(Value: TList<iResultado>): iControllerResultado; overload;
+    function Resultado(Value: TList<iResultado>): iControllerResultado;
+      overload;
     procedure ValidarDados;
     function SimuladorFactory: iSimulador;
     function Calcular: iControllerResultado;
@@ -28,7 +29,8 @@ type
 implementation
 
 uses
-  eInterface.Model.Calculadora.Factory, System.SysUtils, eInterface.Model.Simulador.Factory;
+  eInterestSimulator.Model.Calculadora.Factory, System.SysUtils,
+  eInterestSimulator.Model.Simulador.Factory;
 
 { TControllerResultado }
 
@@ -60,10 +62,7 @@ begin
       FCalculadora := TModelCalculadoraFactory.New.Price;
   end;
 
-  FResultados := FCalculadora
-                  .Simulador(FSimulador)
-                  .Calcular
-                  .Resultados;
+  FResultados := FCalculadora.Simulador(FSimulador).Calcular.Resultados;
 end;
 
 constructor TControllerResultado.Create;
@@ -81,8 +80,8 @@ begin
   Result := Self.Create;
 end;
 
-function TControllerResultado.Resultado(
-  Value: TList<iResultado>): iControllerResultado;
+function TControllerResultado.Resultado(Value: TList<iResultado>)
+  : iControllerResultado;
 begin
   Result := Self;
   FResultados := Value;
@@ -107,7 +106,8 @@ end;
 
 procedure TControllerResultado.ValidarDados;
 begin
-  if not(FSimulador.TipoSistema in [Low(TTypeSistema) .. High(TTypeSistema)]) then
+  if not(FSimulador.TipoSistema in [Low(TTypeSistema) .. High(TTypeSistema)])
+  then
     raise Exception.Create('O Sistema de amortização é obrigatório!');
 
   if (FSimulador.Capital <= 0.0) then

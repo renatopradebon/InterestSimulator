@@ -1,9 +1,9 @@
-unit eInterface.Model.AmortizacaoConstante;
+unit eInterestSimulator.Model.AmortizacaoConstante;
 
 interface
 
 uses
-  eInterface.Model.Interfaces;
+  eInterestSimulator.Model.Interfaces;
 
 type
   TModelAmortizacaoAmortizacaoConstante = class(TInterfacedObject, iResultado)
@@ -13,16 +13,16 @@ type
     FValorAmortizacao: Real;
     FValorSaldo: Real;
     FValorPagamento: Real;
-    function NumeroParcela (Value : Integer) : iResultado; overload;
-    function NumeroParcela : Integer; overload;
-    function ValorJuros (Value : Real) : iResultado; overload;
-    function ValorJuros : Real; overload;
-    function ValorAmortizacao (Value : Real) : iResultado; overload;
-    function ValorAmortizacao : Real; overload;
-    function ValorSaldo (Value : Real) : iResultado; overload;
-    function ValorSaldo : Real; overload;
-    function ValorPagamento (Value : Real) : iResultado; overload;
-    function ValorPagamento : Real; overload;
+    function NumeroParcela(Value: Integer): iResultado; overload;
+    function NumeroParcela: Integer; overload;
+    function ValorJuros(Value: Real): iResultado; overload;
+    function ValorJuros: Real; overload;
+    function ValorAmortizacao(Value: Real): iResultado; overload;
+    function ValorAmortizacao: Real; overload;
+    function ValorSaldo(Value: Real): iResultado; overload;
+    function ValorSaldo: Real; overload;
+    function ValorPagamento(Value: Real): iResultado; overload;
+    function ValorPagamento: Real; overload;
   public
     constructor Create;
     destructor Destroy; override;
@@ -48,8 +48,8 @@ begin
   Result := Self.Create;
 end;
 
-function TModelAmortizacaoAmortizacaoConstante.NumeroParcela(
-  Value: Integer): iResultado;
+function TModelAmortizacaoAmortizacaoConstante.NumeroParcela(Value: Integer)
+  : iResultado;
 begin
   Result := Self;
   FNumeroParcela := Value;
@@ -60,8 +60,8 @@ begin
   Result := FNumeroParcela;
 end;
 
-function TModelAmortizacaoAmortizacaoConstante.ValorAmortizacao(
-  Value: Real): iResultado;
+function TModelAmortizacaoAmortizacaoConstante.ValorAmortizacao(Value: Real)
+  : iResultado;
 begin
   Result := Self;
   FValorAmortizacao := Value;
@@ -72,7 +72,8 @@ begin
   Result := FValorAmortizacao;
 end;
 
-function TModelAmortizacaoAmortizacaoConstante.ValorJuros(Value: Real): iResultado;
+function TModelAmortizacaoAmortizacaoConstante.ValorJuros(Value: Real)
+  : iResultado;
 begin
   Result := Self;
   FValorJuros := Value;
@@ -80,7 +81,7 @@ end;
 
 function TModelAmortizacaoAmortizacaoConstante.ValorJuros: Real;
 begin
-Result := FValorJuros;
+  Result := FValorJuros;
 end;
 
 function TModelAmortizacaoAmortizacaoConstante.ValorPagamento: Real;
@@ -88,14 +89,15 @@ begin
   Result := FValorPagamento;
 end;
 
-function TModelAmortizacaoAmortizacaoConstante.ValorPagamento(
-  Value: Real): iResultado;
+function TModelAmortizacaoAmortizacaoConstante.ValorPagamento(Value: Real)
+  : iResultado;
 begin
   Result := Self;
   FValorPagamento := Value;
 end;
 
-function TModelAmortizacaoAmortizacaoConstante.ValorSaldo(Value: Real): iResultado;
+function TModelAmortizacaoAmortizacaoConstante.ValorSaldo(Value: Real)
+  : iResultado;
 begin
   Result := Self;
   FValorSaldo := Value;

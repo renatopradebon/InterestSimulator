@@ -1,4 +1,4 @@
-﻿unit eInterface.Model.Interfaces;
+﻿unit eInterestSimulator.Model.Interfaces;
 
 interface
 

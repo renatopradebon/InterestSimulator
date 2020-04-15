@@ -1,9 +1,9 @@
-unit eInterface.Controller.Interfaces;
+unit eInterestSimulator.Controller.Interfaces;
 
 interface
 
 uses
-  eInterface.Model.Interfaces, System.Generics.Collections;
+  eInterestSimulator.Model.Interfaces, System.Generics.Collections;
 
 type
 

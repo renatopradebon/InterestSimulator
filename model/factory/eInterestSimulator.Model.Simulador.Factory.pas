@@ -1,9 +1,9 @@
-unit eInterface.Model.Simulador.Factory;
+unit eInterestSimulator.Model.Simulador.Factory;
 
 interface
 
 uses
-  eInterface.Model.Interfaces;
+  eInterestSimulator.Model.Interfaces;
 
 type
   TModelSimuladorFactory = class(TInterfacedObject, iSimuladorFactory)
@@ -18,7 +18,7 @@ type
 implementation
 
 uses
-  eInterface.Model.Simulador;
+  eInterestSimulator.Model.Simulador;
 
 { TModelSimuladorFactory }
 

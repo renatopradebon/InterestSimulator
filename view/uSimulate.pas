@@ -7,7 +7,7 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Mask,
   Vcl.Grids, Data.DB, Datasnap.DBClient, Vcl.ComCtrls, Vcl.DBGrids, Vcl.Buttons,
-  System.Generics.Collections, eInterface.Model.Interfaces;
+  System.Generics.Collections, eInterestSimulator.Model.Interfaces;
 
 type
   TfrmSimulate = class(TForm)
@@ -65,7 +65,8 @@ const
 implementation
 
 uses
-  eInterface.Controller.Resultado, eInterface.Controller.Sistema;
+  eInterestSimulator.Controller.Resultado,
+  eInterestSimulator.Controller.Sistema;
 
 {$R *.dfm}
 
@@ -77,15 +78,13 @@ end;
 procedure TfrmSimulate.CalcularFinanciamento();
 begin
   try
-    FResultados := TControllerResultado
-                  .New
-                  .Simulador(TControllerResultado.New
-                                .SimuladorFactory.Capital(StrToFloatDef(MaskEditValorCapital.Text, cZERO))
-                                .TaxaJuros(StrToFloatDef(MaskEditTaxaJuros.Text, cZERO))
-                                .TotalParcelas(StrToIntDef(MaskEditParcelas.Text, cZERO))
-                                .TipoSistema(TTypeSistema(ComboBoxSistema.Items.Objects[ComboBoxSistema.ItemIndex])))
-                  .Calcular()
-                  .Resultado();
+    FResultados := TControllerResultado.New.Simulador
+      (TControllerResultado.New.SimuladorFactory.Capital
+      (StrToFloatDef(MaskEditValorCapital.Text, cZERO))
+      .TaxaJuros(StrToFloatDef(MaskEditTaxaJuros.Text, cZERO))
+      .TotalParcelas(StrToIntDef(MaskEditParcelas.Text, cZERO))
+      .TipoSistema(TTypeSistema(ComboBoxSistema.Items.Objects
+      [ComboBoxSistema.ItemIndex]))).Calcular().Resultado();
     GerarDadosGrid();
     ShowStatusBar();
   finally
@@ -108,12 +107,12 @@ end;
 
 procedure TfrmSimulate.ClearDataSet();
 begin
-   CDResultado.DisableControls;
-   try
-     CDResultado.EmptyDataSet;
-   finally
-     CDResultado.EnableControls;
-   end;
+  CDResultado.DisableControls;
+  try
+    CDResultado.EmptyDataSet;
+  finally
+    CDResultado.EnableControls;
+  end;
 end;
 
 procedure TfrmSimulate.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -138,8 +137,9 @@ end;
 
 procedure TfrmSimulate.ModificaTituloForm();
 begin
-  Self.Caption := System.SysUtils.Format('Simular Financiamento || Iniciado em %s as %s',
-  [FormatDateTime('dd/mm/yyyy', Now), FormatDateTime('hh:nn:ss', Now)]);
+  Self.Caption := System.SysUtils.Format
+    ('Simular Financiamento || Iniciado em %s as %s',
+    [FormatDateTime('dd/mm/yyyy', Now), FormatDateTime('hh:nn:ss', Now)]);
 end;
 
 procedure TfrmSimulate.PopulaComboSistemas();
@@ -148,7 +148,8 @@ var
 begin
   ComboBoxSistema.Items.Clear;
   for Sistema in FListaSistemas do
-    ComboBoxSistema.Items.AddObject(Sistema.Descricao, TObject(Sistema.TipoSistema));
+    ComboBoxSistema.Items.AddObject(Sistema.Descricao,
+      TObject(Sistema.TipoSistema));
 end;
 
 procedure TfrmSimulate.PopulaSistemas();
@@ -174,13 +175,13 @@ end;
 
 procedure TfrmSimulate.ShowStatusBar();
 var
-  Key, KeyAggregate : Integer;
-  HashStatusBarXAgregate : TDictionary<Integer,Integer>;
+  Key, KeyAggregate: Integer;
+  HashStatusBarXAgregate: TDictionary<Integer, Integer>;
 begin
-  HashStatusBarXAgregate := TDictionary<Integer,Integer>.Create;
-  HashStatusBarXAgregate.Add(1,0);
-  HashStatusBarXAgregate.Add(2,1);
-  HashStatusBarXAgregate.Add(3,2);
+  HashStatusBarXAgregate := TDictionary<Integer, Integer>.Create;
+  HashStatusBarXAgregate.Add(1, 0);
+  HashStatusBarXAgregate.Add(2, 1);
+  HashStatusBarXAgregate.Add(3, 2);
 
   for Key in HashStatusBarXAgregate.Keys do
   begin
@@ -188,7 +189,8 @@ begin
 
     StatusBarResultado.Panels[Key].Text := EmptyStr;
     if not VarIsNull(CDResultado.Aggregates[KeyAggregate].Value) then
-      StatusBarResultado.Panels[Key].Text := FormataValorCurrency(CDResultado.Aggregates[KeyAggregate].Value);
+      StatusBarResultado.Panels[Key].Text :=
+        FormataValorCurrency(CDResultado.Aggregates[KeyAggregate].Value);
   end;
   HashStatusBarXAgregate.Free;
 end;

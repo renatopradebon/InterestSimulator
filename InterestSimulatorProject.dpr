@@ -2,26 +2,26 @@ program InterestSimulatorProject;
 
 uses
   Vcl.Forms,
-  eInterface.Model.Interfaces in 'model\interfaces\eInterface.Model.Interfaces.pas',
-  eInterface.Controller.Interfaces in 'controller\eInterface.Controller.Interfaces.pas',
-  eInterface.Controller.Resultado in 'controller\eInterface.Controller.Resultado.pas',
+  eInterestSimulator.Model.Interfaces in 'model\interfaces\eInterestSimulator.Model.Interfaces.pas',
+  eInterestSimulator.Controller.Resultado in 'controller\eInterestSimulator.Controller.Resultado.pas',
   uParent in 'view\uParent.pas' {frmParent},
   uSimulate in 'view\uSimulate.pas' {frmSimulate},
   uAbout in 'view\uAbout.pas' {frmAbout},
-  eInterface.Model.Alemao in 'model\eInterface.Model.Alemao.pas',
-  eInterface.Model.Americano in 'model\eInterface.Model.Americano.pas',
-  eInterface.Model.AmortizacaoConstante in 'model\eInterface.Model.AmortizacaoConstante.pas',
-  eInterface.Model.AmortizacaoMisto in 'model\eInterface.Model.AmortizacaoMisto.pas',
-  eInterface.Model.PagamentoUnico in 'model\eInterface.Model.PagamentoUnico.pas',
-  eInterface.Model.PagamentoVariavel in 'model\eInterface.Model.PagamentoVariavel.pas',
-  eInterface.Model.Price in 'model\eInterface.Model.Price.pas',
-  eInterface.Model.Simulador in 'model\eInterface.Model.Simulador.pas',
-  eInterface.Model.Sistema in 'model\eInterface.Model.Sistema.pas',
-  eInterface.Model.Resultado.Factory in 'model\factory\eInterface.Model.Resultado.Factory.pas',
-  eInterface.Model.Simulador.Factory in 'model\factory\eInterface.Model.Simulador.Factory.pas',
-  eInterface.Model.PagamentoUnico.Calculadora in 'model\eInterface.Model.PagamentoUnico.Calculadora.pas',
-  eInterface.Model.Calculadora.Factory in 'model\factory\eInterface.Model.Calculadora.Factory.pas',
-  eInterface.Controller.Sistema in 'controller\eInterface.Controller.Sistema.pas';
+  eInterestSimulator.Model.Alemao in 'model\eInterestSimulator.Model.Alemao.pas',
+  eInterestSimulator.Model.Americano in 'model\eInterestSimulator.Model.Americano.pas',
+  eInterestSimulator.Model.AmortizacaoConstante in 'model\eInterestSimulator.Model.AmortizacaoConstante.pas',
+  eInterestSimulator.Model.AmortizacaoMisto in 'model\eInterestSimulator.Model.AmortizacaoMisto.pas',
+  eInterestSimulator.Model.PagamentoUnico in 'model\eInterestSimulator.Model.PagamentoUnico.pas',
+  eInterestSimulator.Model.PagamentoVariavel in 'model\eInterestSimulator.Model.PagamentoVariavel.pas',
+  eInterestSimulator.Model.Price in 'model\eInterestSimulator.Model.Price.pas',
+  eInterestSimulator.Model.Simulador in 'model\eInterestSimulator.Model.Simulador.pas',
+  eInterestSimulator.Model.Sistema in 'model\eInterestSimulator.Model.Sistema.pas',
+  eInterestSimulator.Model.Resultado.Factory in 'model\factory\eInterestSimulator.Model.Resultado.Factory.pas',
+  eInterestSimulator.Model.Simulador.Factory in 'model\factory\eInterestSimulator.Model.Simulador.Factory.pas',
+  eInterestSimulator.Model.PagamentoUnico.Calculadora in 'model\eInterestSimulator.Model.PagamentoUnico.Calculadora.pas',
+  eInterestSimulator.Model.Calculadora.Factory in 'model\factory\eInterestSimulator.Model.Calculadora.Factory.pas',
+  eInterestSimulator.Controller.Sistema in 'controller\eInterestSimulator.Controller.Sistema.pas',
+  eInterestSimulator.Controller.Interfaces in 'controller\interfaces\eInterestSimulator.Controller.Interfaces.pas';
 
 {$R *.res}
 

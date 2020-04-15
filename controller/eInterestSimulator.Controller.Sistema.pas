@@ -1,10 +1,10 @@
-﻿unit eInterface.Controller.Sistema;
+﻿unit eInterestSimulator.Controller.Sistema;
 
 interface
 
 uses
-  eInterface.Controller.Interfaces, System.Generics.Collections,
-  eInterface.Model.Interfaces;
+  eInterestSimulator.Controller.Interfaces, System.Generics.Collections,
+  eInterestSimulator.Model.Interfaces;
 
 type
   TControllerSistema = class(TInterfacedObject, iControllerSistema)
@@ -22,9 +22,9 @@ type
 implementation
 
 uses
-  eInterface.Model.Calculadora.Factory, System.SysUtils,
-  eInterface.Model.Simulador.Factory,
-  eInterface.Model.Sistema;
+  eInterestSimulator.Model.Calculadora.Factory, System.SysUtils,
+  eInterestSimulator.Model.Simulador.Factory,
+  eInterestSimulator.Model.Sistema;
 
 { TControllerSistema }
 

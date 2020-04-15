@@ -1,9 +1,9 @@
-unit eInterface.Model.PagamentoUnico;
+unit eInterestSimulator.Model.PagamentoUnico;
 
 interface
 
 uses
-  eInterface.Model.Interfaces, System.Generics.Collections;
+  eInterestSimulator.Model.Interfaces, System.Generics.Collections;
 
 type
   TModelAmortizacaoPagamentoUnico = class(TInterfacedObject, iResultado)
@@ -13,16 +13,16 @@ type
     FValorAmortizacao: Real;
     FValorSaldo: Real;
     FValorPagamento: Real;
-    function NumeroParcela (Value : Integer) : iResultado; overload;
-    function NumeroParcela : Integer; overload;
-    function ValorJuros (Value : Real) : iResultado; overload;
-    function ValorJuros : Real; overload;
-    function ValorAmortizacao (Value : Real) : iResultado; overload;
-    function ValorAmortizacao : Real; overload;
-    function ValorSaldo (Value : Real) : iResultado; overload;
-    function ValorSaldo : Real; overload;
-    function ValorPagamento (Value : Real) : iResultado; overload;
-    function ValorPagamento : Real; overload;
+    function NumeroParcela(Value: Integer): iResultado; overload;
+    function NumeroParcela: Integer; overload;
+    function ValorJuros(Value: Real): iResultado; overload;
+    function ValorJuros: Real; overload;
+    function ValorAmortizacao(Value: Real): iResultado; overload;
+    function ValorAmortizacao: Real; overload;
+    function ValorSaldo(Value: Real): iResultado; overload;
+    function ValorSaldo: Real; overload;
+    function ValorPagamento(Value: Real): iResultado; overload;
+    function ValorPagamento: Real; overload;
   public
     constructor Create;
     destructor Destroy; override;
@@ -48,8 +48,8 @@ begin
   Result := Self.Create;
 end;
 
-function TModelAmortizacaoPagamentoUnico.NumeroParcela(
-  Value: Integer): iResultado;
+function TModelAmortizacaoPagamentoUnico.NumeroParcela(Value: Integer)
+  : iResultado;
 begin
   Result := Self;
   FNumeroParcela := Value;
@@ -60,8 +60,8 @@ begin
   Result := FNumeroParcela;
 end;
 
-function TModelAmortizacaoPagamentoUnico.ValorAmortizacao(
-  Value: Real): iResultado;
+function TModelAmortizacaoPagamentoUnico.ValorAmortizacao(Value: Real)
+  : iResultado;
 begin
   Result := Self;
   FValorAmortizacao := Value;
@@ -80,7 +80,7 @@ end;
 
 function TModelAmortizacaoPagamentoUnico.ValorJuros: Real;
 begin
-Result := FValorJuros;
+  Result := FValorJuros;
 end;
 
 function TModelAmortizacaoPagamentoUnico.ValorPagamento: Real;
@@ -88,8 +88,8 @@ begin
   Result := FValorPagamento;
 end;
 
-function TModelAmortizacaoPagamentoUnico.ValorPagamento(
-  Value: Real): iResultado;
+function TModelAmortizacaoPagamentoUnico.ValorPagamento(Value: Real)
+  : iResultado;
 begin
   Result := Self;
   FValorPagamento := Value;

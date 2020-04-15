@@ -1,32 +1,33 @@
-﻿unit eInterface.Model.Resultado.Factory;
+﻿unit eInterestSimulator.Model.Resultado.Factory;
 
 interface
 
 uses
-  eInterface.Model.Interfaces, eInterface.Model.PagamentoUnico, eInterface.Model.PagamentoVariavel,
-  eInterface.Model.Alemao, eInterface.Model.Americano,
-  eInterface.Model.AmortizacaoMisto, eInterface.Model.Price;
+  eInterestSimulator.Model.Interfaces, eInterestSimulator.Model.PagamentoUnico,
+  eInterestSimulator.Model.PagamentoVariavel,
+  eInterestSimulator.Model.Alemao, eInterestSimulator.Model.Americano,
+  eInterestSimulator.Model.AmortizacaoMisto, eInterestSimulator.Model.Price;
 
 type
   TModelResultadoFactory = class(TInterfacedObject, iResultadoFactory)
-    private
-      function PagamentoUnico : iResultado;
-      function PagamentoVariavel : iResultado;
-      function Americano : iResultado;
-      function AmortizacaoConstante : iResultado;
-      function Price : iResultado;
-      function AmortizacaoMisto : iResultado;
-      function Alemao : iResultado;
-    public
-      constructor Create;
-      destructor Destroy; override;
-      class function  New : iResultadoFactory;
+  private
+    function PagamentoUnico: iResultado;
+    function PagamentoVariavel: iResultado;
+    function Americano: iResultado;
+    function AmortizacaoConstante: iResultado;
+    function Price: iResultado;
+    function AmortizacaoMisto: iResultado;
+    function Alemao: iResultado;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    class function New: iResultadoFactory;
   end;
 
 implementation
 
 uses
-  eInterface.Model.AmortizacaoConstante;
+  eInterestSimulator.Model.AmortizacaoConstante;
 
 { TModelAmortizacaoFactory }
 
@@ -62,7 +63,7 @@ end;
 
 class function TModelResultadoFactory.New: iResultadoFactory;
 begin
-    Result := Self.Create;
+  Result := Self.Create;
 end;
 
 function TModelResultadoFactory.PagamentoUnico: iResultado;

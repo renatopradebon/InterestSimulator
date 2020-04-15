@@ -1,9 +1,9 @@
-unit eInterface.Model.Sistema;
+unit eInterestSimulator.Model.Sistema;
 
 interface
 
 uses
-  eInterface.Model.Interfaces;
+  eInterestSimulator.Model.Interfaces;
 
 type
   TModelSistema = class(TInterfacedObject, iSistema)
@@ -11,7 +11,7 @@ type
     FDescricao: String;
     FHabilitado: Boolean;
     FTipoSistema: TTypeSistema;
-    function Descricao(Value: String) : iSistema; overload;
+    function Descricao(Value: String): iSistema; overload;
     function Descricao: String; overload;
     function Habilitado(Value: Boolean): iSistema; overload;
     function Habilitado: Boolean; overload;

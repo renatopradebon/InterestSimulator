@@ -100,9 +100,8 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="model\interfaces\eInterface.Model.Interfaces.pas"/>
-        <DCCReference Include="controller\eInterface.Controller.Interfaces.pas"/>
-        <DCCReference Include="controller\eInterface.Controller.Resultado.pas"/>
+        <DCCReference Include="model\interfaces\eInterestSimulator.Model.Interfaces.pas"/>
+        <DCCReference Include="controller\eInterestSimulator.Controller.Resultado.pas"/>
         <DCCReference Include="view\uParent.pas">
             <Form>frmParent</Form>
             <FormType>dfm</FormType>
@@ -115,29 +114,30 @@
             <Form>frmAbout</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="model\eInterface.Model.Alemao.pas"/>
-        <DCCReference Include="model\eInterface.Model.Americano.pas"/>
-        <DCCReference Include="model\eInterface.Model.AmortizacaoConstante.pas"/>
-        <DCCReference Include="model\eInterface.Model.AmortizacaoMisto.pas"/>
-        <DCCReference Include="model\eInterface.Model.PagamentoUnico.pas"/>
-        <DCCReference Include="model\eInterface.Model.PagamentoVariavel.pas"/>
-        <DCCReference Include="model\eInterface.Model.Price.pas"/>
-        <DCCReference Include="model\eInterface.Model.Simulador.pas"/>
-        <DCCReference Include="model\eInterface.Model.Sistema.pas"/>
-        <DCCReference Include="model\factory\eInterface.Model.Resultado.Factory.pas"/>
-        <DCCReference Include="model\factory\eInterface.Model.Simulador.Factory.pas"/>
-        <DCCReference Include="model\eInterface.Model.PagamentoUnico.Calculadora.pas"/>
-        <DCCReference Include="model\factory\eInterface.Model.Calculadora.Factory.pas"/>
-        <DCCReference Include="controller\eInterface.Controller.Sistema.pas"/>
+        <DCCReference Include="model\eInterestSimulator.Model.Alemao.pas"/>
+        <DCCReference Include="model\eInterestSimulator.Model.Americano.pas"/>
+        <DCCReference Include="model\eInterestSimulator.Model.AmortizacaoConstante.pas"/>
+        <DCCReference Include="model\eInterestSimulator.Model.AmortizacaoMisto.pas"/>
+        <DCCReference Include="model\eInterestSimulator.Model.PagamentoUnico.pas"/>
+        <DCCReference Include="model\eInterestSimulator.Model.PagamentoVariavel.pas"/>
+        <DCCReference Include="model\eInterestSimulator.Model.Price.pas"/>
+        <DCCReference Include="model\eInterestSimulator.Model.Simulador.pas"/>
+        <DCCReference Include="model\eInterestSimulator.Model.Sistema.pas"/>
+        <DCCReference Include="model\factory\eInterestSimulator.Model.Resultado.Factory.pas"/>
+        <DCCReference Include="model\factory\eInterestSimulator.Model.Simulador.Factory.pas"/>
+        <DCCReference Include="model\eInterestSimulator.Model.PagamentoUnico.Calculadora.pas"/>
+        <DCCReference Include="model\factory\eInterestSimulator.Model.Calculadora.Factory.pas"/>
+        <DCCReference Include="controller\eInterestSimulator.Controller.Sistema.pas"/>
+        <DCCReference Include="controller\interfaces\eInterestSimulator.Controller.Interfaces.pas"/>
         <None Include="ModelSupport_InterestSimulatorProject\default.txaPackage"/>
         <None Include="ModelSupport_InterestSimulatorProject\default.txvpck"/>
         <None Include="ModelSupport_InterestSimulatorProject\InterestSimulatorProject\default.txvpck"/>
-        <None Include="ModelSupport_InterestSimulatorProject\eInterface\default.txvpck"/>
-        <None Include="ModelSupport_InterestSimulatorProject\eInterface\Model\default.txvpck"/>
-        <None Include="ModelSupport_InterestSimulatorProject\eInterface\Model\Interfaces\default.txvpck"/>
-        <None Include="ModelSupport_InterestSimulatorProject\eInterface\Model\Interfaces\default.txaPackage"/>
-        <None Include="ModelSupport_InterestSimulatorProject\eInterface\Model\PagamentoUnico\default.txvpck"/>
-        <None Include="ModelSupport_InterestSimulatorProject\eInterface\Model\PagamentoUnico\default.txaPackage"/>
+        <None Include="ModelSupport_InterestSimulatorProject\eInterestSimulator\default.txvpck"/>
+        <None Include="ModelSupport_InterestSimulatorProject\eInterestSimulator\Model\default.txvpck"/>
+        <None Include="ModelSupport_InterestSimulatorProject\eInterestSimulator\Model\Interfaces\default.txvpck"/>
+        <None Include="ModelSupport_InterestSimulatorProject\eInterestSimulator\Model\Interfaces\default.txaPackage"/>
+        <None Include="ModelSupport_InterestSimulatorProject\eInterestSimulator\Model\PagamentoUnico\default.txvpck"/>
+        <None Include="ModelSupport_InterestSimulatorProject\eInterestSimulator\Model\PagamentoUnico\default.txaPackage"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -164,19 +164,19 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
-                <DeployFile LocalName="ModelSupport_InterestSimulatorProject\eInterface\default.txvpck" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="ModelSupport_InterestSimulatorProject\eInterestSimulator\Model\Interfaces\default.txvpck" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="ModelSupport_InterestSimulatorProject\eInterface\Model\default.txvpck" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="ModelSupport_InterestSimulatorProject\eInterestSimulator\Model\PagamentoUnico\default.txvpck" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="ModelSupport_InterestSimulatorProject\eInterface\Model\Interfaces\default.txvpck" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="ModelSupport_InterestSimulatorProject\eInterestSimulator\default.txvpck" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
@@ -194,7 +194,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="ModelSupport_InterestSimulatorProject\eInterface\Model\Interfaces\default.txaPackage" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="ModelSupport_InterestSimulatorProject\eInterestSimulator\Model\default.txvpck" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
@@ -212,13 +212,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="ModelSupport_InterestSimulatorProject\eInterface\Model\PagamentoUnico\default.txvpck" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="ModelSupport_InterestSimulatorProject\eInterestSimulator\Model\Interfaces\default.txaPackage" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="ModelSupport_InterestSimulatorProject\eInterface\Model\PagamentoUnico\default.txaPackage" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="ModelSupport_InterestSimulatorProject\eInterestSimulator\Model\PagamentoUnico\default.txaPackage" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>

@@ -1,9 +1,9 @@
-unit eInterface.Model.PagamentoUnico.Calculadora;
+unit eInterestSimulator.Model.PagamentoUnico.Calculadora;
 
 interface
 
 uses
-  eInterface.Model.Interfaces, System.Generics.Collections;
+  eInterestSimulator.Model.Interfaces, System.Generics.Collections;
 
 type
   TModelPagamentoUnicoCalculadora = class(TInterfacedObject, iCalculadora)
@@ -23,7 +23,7 @@ type
 implementation
 
 uses
-  eInterface.Model.Resultado.Factory;
+  eInterestSimulator.Model.Resultado.Factory;
 
 { TModelPagamentoUnicoCalculadora }
 
@@ -58,14 +58,9 @@ begin
         FValorAcumulado := 0;
       end;
 
-      FResultado := TModelResultadoFactory
-                      .New
-                      .PagamentoUnico
-                      .NumeroParcela(I)
-                      .ValorJuros(FJuros)
-                      .ValorAmortizacao(FValorAmortizacao)
-                      .ValorPagamento(FValorPagamento)
-                      .ValorSaldo(FValorAcumulado);
+      FResultado := TModelResultadoFactory.New.PagamentoUnico.NumeroParcela(I)
+        .ValorJuros(FJuros).ValorAmortizacao(FValorAmortizacao)
+        .ValorPagamento(FValorPagamento).ValorSaldo(FValorAcumulado);
       FResultados.Add(FResultado);
 
       FJuros := (FValorAcumulado * TaxaJuros / cCEM);

@@ -1,9 +1,9 @@
-unit eInterface.Model.Simulador;
+unit eInterestSimulator.Model.Simulador;
 
 interface
 
 uses
-  eInterface.Model.Interfaces;
+  eInterestSimulator.Model.Interfaces;
 
 type
   TModelSimulador = class(TInterfacedObject, iSimulador)
@@ -11,15 +11,15 @@ type
     FCapital: Real;
     FTaxaJuros: Real;
     FTotalParcelas: Integer;
-    FTipoSistema :  TTypeSistema;
-    function Capital (Value : Real): iSimulador; overload;
-    function Capital : Real; overload;
-    function TaxaJuros (Value : Real): iSimulador; overload;
-    function TaxaJuros : Real; overload;
-    function TotalParcelas (Value : Integer): iSimulador; overload;
-    function TotalParcelas : Integer; overload;
-    function TipoSistema (Value : TTypeSistema) : iSimulador; overload;
-    function TipoSistema : TTypeSistema; overload;
+    FTipoSistema: TTypeSistema;
+    function Capital(Value: Real): iSimulador; overload;
+    function Capital: Real; overload;
+    function TaxaJuros(Value: Real): iSimulador; overload;
+    function TaxaJuros: Real; overload;
+    function TotalParcelas(Value: Integer): iSimulador; overload;
+    function TotalParcelas: Integer; overload;
+    function TipoSistema(Value: TTypeSistema): iSimulador; overload;
+    function TipoSistema: TTypeSistema; overload;
   public
     constructor Create;
     destructor Destroy; override;
