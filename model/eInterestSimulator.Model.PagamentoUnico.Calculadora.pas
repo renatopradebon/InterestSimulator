@@ -76,6 +76,7 @@ end;
 
 destructor TModelPagamentoUnicoCalculadora.Destroy;
 begin
+  FreeAndNil(FResultados);
   inherited;
 end;
 
